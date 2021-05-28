@@ -272,6 +272,9 @@ void InitHeaderSearch::AddDefaultCIncludePaths(const llvm::Triple &triple,
   case llvm::Triple::Solaris:
   case llvm::Triple::OpenBSD:
     llvm_unreachable("Include management is handled in the driver.");
+  case llvm::Triple::Borrrdex:
+    AddPath("/system/include", System, false);
+    break;
 
   case llvm::Triple::CloudABI: {
     // <sysroot>/<triple>/include

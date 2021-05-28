@@ -161,6 +161,7 @@ public:
     UnknownOS,
 
     Ananas,
+    Borrrdex,
     CloudABI,
     Darwin,
     DragonFly,

@@ -13,6 +13,7 @@
 #include "ToolChains/AVR.h"
 #include "ToolChains/Ananas.h"
 #include "ToolChains/BareMetal.h"
+#include "ToolChains/Borrrdex.h"
 #include "ToolChains/Clang.h"
 #include "ToolChains/CloudABI.h"
 #include "ToolChains/Contiki.h"
@@ -4896,6 +4897,9 @@ const ToolChain &Driver::getToolChain(const ArgList &Args,
       break;
     case llvm::Triple::Ananas:
       TC = std::make_unique<toolchains::Ananas>(*this, Target, Args);
+      break;
+    case llvm::Triple::Borrrdex:
+      TC = std::make_unique<toolchains::Borrrdex>(*this, Target, Args);
       break;
     case llvm::Triple::CloudABI:
       TC = std::make_unique<toolchains::CloudABI>(*this, Target, Args);

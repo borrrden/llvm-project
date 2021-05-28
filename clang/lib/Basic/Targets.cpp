@@ -559,6 +559,8 @@ TargetInfo *AllocateTarget(const llvm::Triple &Triple,
         return new MicrosoftX86_64TargetInfo(Triple, Opts);
       }
     }
+    case llvm::Triple::Borrrdex:
+      return new BorrrdexTargetInfo<X86_64TargetInfo>(Triple, Opts);
     case llvm::Triple::Haiku:
       return new HaikuTargetInfo<X86_64TargetInfo>(Triple, Opts);
     case llvm::Triple::NaCl:

@@ -187,6 +187,7 @@ StringRef Triple::getOSTypeName(OSType Kind) {
   case AMDHSA: return "amdhsa";
   case AMDPAL: return "amdpal";
   case Ananas: return "ananas";
+  case Borrrdex: return "borrrdex";
   case CNK: return "cnk";
   case CUDA: return "cuda";
   case CloudABI: return "cloudabi";
@@ -489,6 +490,7 @@ static Triple::VendorType parseVendor(StringRef VendorName) {
 static Triple::OSType parseOS(StringRef OSName) {
   return StringSwitch<Triple::OSType>(OSName)
     .StartsWith("ananas", Triple::Ananas)
+    .StartsWith("borrrdex", Triple::Borrrdex)
     .StartsWith("cloudabi", Triple::CloudABI)
     .StartsWith("darwin", Triple::Darwin)
     .StartsWith("dragonfly", Triple::DragonFly)

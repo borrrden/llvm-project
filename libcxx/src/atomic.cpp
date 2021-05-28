@@ -16,11 +16,13 @@
 #include <iostream>
 
 #ifdef __linux__
+#ifndef __borrrdex__
 
 #include <unistd.h>
 #include <linux/futex.h>
 #include <sys/syscall.h>
 
+#endif
 #else // <- Add other operating systems here
 
 // Baseline needs no new headers

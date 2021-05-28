@@ -50,6 +50,9 @@ extern char **environ;
 #include <sys/mount.h>
 #elif defined(__MVS__)
 #include <sys/ps.h>
+#elif defined(__borrrdex__)
+#include <abi-bits/auxv.h>
+extern char **environ;
 #endif
 
 // Both stdio.h and cstdio are included via different paths and
@@ -123,7 +126,8 @@ const file_t kInvalidFile = -1;
 
 #if defined(__FreeBSD__) || defined(__NetBSD__) || defined(__OpenBSD__) ||     \
     defined(__minix) || defined(__FreeBSD_kernel__) || defined(__linux__) ||   \
-    defined(__CYGWIN__) || defined(__DragonFly__) || defined(_AIX) || defined(__GNU__)
+    defined(__CYGWIN__) || defined(__DragonFly__) || defined(_AIX) || defined(__GNU__) || \
+    defined(__borrrdex__)
 static int
 test_dir(char ret[PATH_MAX], const char *dir, const char *bin)
 {
@@ -197,7 +201,7 @@ std::string getMainExecutable(const char *argv0, void *MainAddr) {
     if (realpath(exe_path, link_path))
       return link_path;
   }
-#elif defined(__FreeBSD__)
+#elif defined(__FreeBSD__) || defined(__borrrdex__)
   // On FreeBSD if the exec path specified in ELF auxiliary vectors is
   // preferred, if available.  /proc/curproc/file and the KERN_PROC_PATHNAME
   // sysctl may not return the desired path if there are multiple hardlinks
@@ -447,7 +451,7 @@ std::error_code remove(const Twine &path, bool IgnoreNonExisting) {
 }
 
 static bool is_local_impl(struct STATVFS &Vfs) {
-#if defined(__linux__) || defined(__GNU__)
+#if (defined(__linux__) || defined(__GNU__)) && !defined(__borrrdex__)
 #ifndef NFS_SUPER_MAGIC
 #define NFS_SUPER_MAGIC 0x6969
 #endif
@@ -469,6 +473,9 @@ static bool is_local_impl(struct STATVFS &Vfs) {
   default:
     return true;
   }
+#elif defined(__borrrdex__)
+  // Doesn't expose this information
+  return false;
 #elif defined(__CYGWIN__)
   // Cygwin doesn't expose this information; would need to use Win32 API.
   return false;
